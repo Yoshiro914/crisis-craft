@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Crisis Craft Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg:       #0e0e1f;
+  --bg2:      #16162e;
+  --bg3:      #1e1e3a;
+  --bg4:      #0a0a1a;
+  --gold:     #c8a84b;
+  --gold-dim: rgba(200,168,75,0.14);
+  --gold-mid: rgba(200,168,75,0.40);
+  --red:      #c0392b;
+  --red-lit:  #e74c3c;
+  --text:     #f0eee8;
+  --muted:    #8f8faa;
+  --faint:    #555570;
+  --rule:     #1e1e3a;
+  --serif:    'Playfair Display', Georgia, serif;
+  --sans:     'DM Sans', system-ui, sans-serif;
+  --r:        8px;
+  --r-lg:     12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── ANNOUNCEMENT BAR ── */
+.ann {
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+.ann span { color: #ffd97a; font-weight: 600; }
+
+/* ── NAV ── */
+.nav {
+  background: rgba(10,10,26,0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 48px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  letter-spacing: -.01em;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 30px; }
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cart {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gold);
+  transition: opacity .2s;
+}
+.nav-cart:hover { opacity: .78; }
+.cart-dot {
+  background: var(--red);
+  color: #fff;
+  border-radius: 50%;
+  width: 17px; height: 17px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border-radius: var(--r);
+  border: none;
+  cursor: pointer;
+  transition: filter .2s, transform .15s;
+  text-decoration: none;
+}
+.btn-primary:hover { filter: brightness(1.12); transform: translateY(-1px); }
+
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold-mid);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background .2s;
+  text-decoration: none;
+}
+.btn-outline:hover { background: var(--gold-dim); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 580px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 60%, rgba(192,57,43,0.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 25%, rgba(200,168,75,0.07) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230a0a1a'/%3E%3Crect width='1' height='1' fill='%23ffffff' opacity='0.025'/%3E%3C/svg%3E");
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 780px;
+  padding: 90px 40px;
+  animation: fadeUp .8s ease both;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--gold-mid);
+}
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(46px, 8vw, 88px);
+  font-weight: 900;
+  line-height: .95;
+  letter-spacing: -.02em;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.hero-h1 .gold { color: var(--gold); }
+.hero-h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.5vw, 38px);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: -.01em;
+  margin-bottom: 26px;
+}
+.hero-desc {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 540px;
+  margin: 0 auto 36px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+.hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.hero-price-note {
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: 16px;
+  letter-spacing: .04em;
+}
+.hero-price-note .strike { text-decoration: line-through; color: #3a3a5a; }
+.hero-price-note .price { color: var(--gold); font-weight: 600; font-size: 15px; }
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  background: var(--bg2);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 18px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 44px;
+  flex-wrap: wrap;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.trust-icon { color: var(--gold); font-size: 16px; }
+
+/* ── SECTION WRAPPER ── */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 80px 48px; }
+.wrap-alt { background: var(--bg2); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+
+.sec-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.sec-h {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+.sec-h .gold { color: var(--gold); }
+.sec-desc {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 580px;
+  line-height: 1.75;
+  margin-bottom: 44px;
+  font-weight: 300;
+}
+
+/* ── INSIDE GRID (6 cards) ── */
+.inside-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 2px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 44px;
+}
+.inside-card {
+  background: var(--bg);
+  padding: 30px 26px;
+  transition: background .2s;
+  position: relative;
+  overflow: hidden;
+}
+.inside-card:hover { background: #12122a; }
+.inside-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 100%;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.inside-card:hover::before { opacity: 1; }
+.inside-num {
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--rule);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.inside-card h3 {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 10px;
+  letter-spacing: -.01em;
+}
+.inside-card p { font-size: 13px; color: #6a6a8a; line-height: 1.65; }
+
+/* ── WHO SECTION ── */
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  margin-top: 44px;
+}
+.who-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.who-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.who-list li::before {
+  content: '▸';
+  color: var(--gold);
+  font-size: 12px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.who-callout {
+  background: var(--bg3);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 30px 28px;
+}
+.who-callout p {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.who-callout .sig {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── TESTIMONIALS ── */
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 44px;
+}
+.testi-card {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.testi-card:hover { border-color: var(--gold-mid); }
+.testi-card::before {
+  content: '"';
+  position: absolute;
+  top: 10px; right: 16px;
+  font-family: var(--serif);
+  font-size: 64px;
+  color: var(--rule);
+  line-height: 1;
+}
+.testi-stars { color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-bottom: 11px; }
+.testi-card p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+.testi-author { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+
+/* ── FAQ ── */
+.faq-list { display: flex; flex-direction: column; margin-top: 44px; border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; }
+.faq-item { background: var(--bg2); border-bottom: 1px solid var(--rule); }
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  gap: 12px;
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-icon { color: var(--gold); font-size: 20px; flex-shrink: 0; transition: transform .3s; line-height: 1; }
+.faq-q.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  font-size: 13px;
+  color: #6a6a8a;
+  line-height: 1.75;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, padding .3s;
+  padding: 0 22px;
+}
+.faq-a.open { max-height: 220px; padding: 0 22px 18px; }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  background: linear-gradient(135deg, #12122e 0%, var(--bg) 50%, #14140e 100%);
+  border-top: 1px solid var(--rule);
+  padding: 80px 40px;
+  text-align: center;
+}
+.cta-inner { max-width: 600px; margin: 0 auto; }
+.price-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+.price-was { font-size: 20px; color: var(--faint); text-decoration: line-through; font-family: var(--serif); }
+.price-now {
+  font-family: var(--serif);
+  font-size: 68px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.price-tag {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+.guarantee-note { font-size: 12px; color: var(--faint); margin-top: 16px; letter-spacing: .04em; }
+
+/* ── PRODUCT PAGE ── */
+.product-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 48px;
+}
+.book-box {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.book-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 30%, rgba(200,168,75,0.06), transparent 60%);
+}
+.book-mockup {
+  width: 68%;
+  aspect-ratio: 2/3;
+  background: linear-gradient(135deg, var(--bg4) 0%, #12122a 60%, var(--bg4) 100%);
+  border: 1px solid var(--bg3);
+  border-radius: var(--r);
+  box-shadow: 0 24px 64px rgba(0,0,0,.6), inset 0 0 40px rgba(200,168,75,0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+  position: relative;
+}
+.book-mockup::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--r) + 1px);
+  background: linear-gradient(145deg, rgba(200,168,75,.2), transparent 55%);
+  pointer-events: none;
+}
+.book-mockup::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 10px;
+  background: linear-gradient(90deg, rgba(0,0,0,.5), transparent);
+  border-radius: var(--r) 0 0 var(--r);
+}
+.book-vol { font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.book-icon-wrap {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-mid);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+.book-t { font-family: var(--serif); font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 6px; text-align: center; }
+.book-d { font-size: 8px; color: #5a5a7a; line-height: 1.5; margin-bottom: 12px; text-align: center; }
+.book-ln { height: 1px; background: var(--rule); margin-bottom: 10px; width: 100%; }
+.book-br { font-size: 7px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+
+.product-info .breadcrumb { font-size: 11px; color: var(--faint); margin-bottom: 14px; cursor: pointer; letter-spacing: .04em; }
+.product-info .breadcrumb span { color: var(--gold); }
+.product-info h1 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 12px;
+}
+.product-info h1 .gold { color: var(--gold); }
+.prod-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--faint);
+  margin-bottom: 20px;
+}
+.prod-stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; }
+.price-block {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  margin-bottom: 22px;
+}
+.price-block .orig { font-size: 12px; color: var(--faint); text-decoration: line-through; margin-bottom: 4px; }
+.price-block .sale {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.price-block .save-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--bg);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.prod-bullets { list-style: none; margin: 20px 0 22px; display: flex; flex-direction: column; gap: 10px; }
+.prod-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--muted); }
+.prod-bullets li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.atc-btn {
+  width: 100%;
+  padding: 17px;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter .2s, transform .15s;
+  margin-bottom: 10px;
+  display: block;
+}
+.atc-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.guar-strip { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--faint); margin-top: 10px; }
+.guar-strip span { color: var(--gold); }
+
+/* ── PRODUCT TABS ── */
+.tabs-wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px 64px; }
+.tab-nav { display: flex; border-bottom: 1px solid var(--rule); margin-bottom: 36px; }
+.tab-btn {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 0 20px 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all .2s;
+}
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── CART ── */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 44px;
+  align-items: start;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px 48px;
+}
+.cart-h { font-family: var(--serif); font-size: 38px; font-weight: 700; margin-bottom: 28px; letter-spacing: -.01em; }
+.cart-item {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  display: flex;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+.cart-img {
+  width: 76px; height: 96px;
+  background: var(--bg4);
+  border: 1px solid var(--bg3);
+  border-radius: var(--r);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 8px;
+  color: var(--gold);
+  text-align: center;
+  line-height: 1.4;
+  position: relative;
+}
+.cart-img::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--r) + 1px);
+  background: linear-gradient(145deg, rgba(200,168,75,.18), transparent 55%);
+  pointer-events: none;
+}
+.cart-info h3 { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.cart-info .tag { font-size: 10px; color: var(--faint); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+.cart-info .price { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--gold); }
+.cart-info .was { font-size: 11px; color: var(--faint); text-decoration: line-through; margin-top: 2px; }
+.cart-remove { font-size: 11px; color: var(--faint); cursor: pointer; letter-spacing: .06em; text-transform: uppercase; margin-top: 8px; display: inline-block; transition: color .2s; }
+.cart-remove:hover { color: var(--red-lit); }
+
+.cart-summary {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 26px;
+  position: sticky;
+  top: 80px;
+}
+.cart-summary h2 { font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.sum-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.sum-row.disc { color: #e05a4a; }
+.sum-row.total { font-family: var(--serif); font-size: 24px; color: var(--text); border-top: 1px solid var(--rule); padding-top: 14px; margin-top: 6px; }
+.sum-row.total .val { color: var(--gold); }
+.coupon-row { display: flex; gap: 8px; margin: 16px 0; }
+.coupon-row input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  color: var(--text);
+  padding: 10px 14px;
+  font-family: var(--sans);
+  font-size: 13px;
+  outline: none;
+  transition: border-color .2s;
+}
+.coupon-row input:focus { border-color: var(--gold-mid); }
+.coupon-row input::placeholder { color: var(--bg3); }
+.coupon-row button {
+  background: var(--bg3);
+  color: var(--gold);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color .2s;
+}
+.coupon-row button:hover { border-color: var(--gold-mid); }
+.checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter .2s;
+  margin-top: 6px;
+}
+.checkout-btn:hover { filter: brightness(1.12); }
+
+/* ── CHECKOUT ── */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 44px;
+  align-items: start;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px 48px;
+}
+.checkout-h { font-family: var(--serif); font-size: 32px; font-weight: 700; margin-bottom: 6px; letter-spacing: -.01em; }
+.checkout-sub { font-size: 12px; color: var(--faint); margin-bottom: 28px; letter-spacing: .04em; }
+.steps { display: flex; gap: 6px; margin-bottom: 30px; flex-wrap: wrap; }
+.step {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--rule);
+  color: var(--faint);
+}
+.step.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.step.done { border-color: var(--gold-mid); color: var(--gold); }
+.f-sec-label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 22px 0 14px; }
+.f-group { margin-bottom: 14px; }
+.f-label { display: block; font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin-bottom: 6px; }
+.f-input, .f-select {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  color: var(--text);
+  padding: 12px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+  -webkit-appearance: none;
+}
+.f-input:focus, .f-select:focus { border-color: var(--gold-mid); }
+.f-input::placeholder { color: var(--bg3); }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pay-methods { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.pay-opt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  padding: 10px 16px;
+  border-radius: var(--r);
+  border: 1px solid var(--rule);
+  color: var(--faint);
+  cursor: pointer;
+  transition: all .2s;
+}
+.pay-opt.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.pay-opt:hover { border-color: var(--gold-mid); }
+.pay-fields { display: none; }
+.pay-fields.active { display: block; }
+
+/* Checkout sidebar */
+.order-mini {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  position: sticky;
+  top: 80px;
+}
+.order-mini h3 { font-family: var(--serif); font-size: 19px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.mini-item { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid #1a1a2a; margin-bottom: 14px; }
+.mini-img { width: 44px; height: 56px; background: var(--bg4); border: 1px solid var(--bg3); border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 7px; color: var(--gold); text-align: center; line-height: 1.4; position: relative; overflow: hidden; }
+.mini-img::before { content: ''; position: absolute; inset: -1px; background: linear-gradient(145deg, rgba(200,168,75,.18), transparent 55%); pointer-events: none; }
+.mini-name { flex: 1; font-size: 12px; color: var(--text); line-height: 1.4; }
+.mini-price { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold); }
+.mini-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+.mini-row.disc { color: #e05a4a; }
+.mini-row.total { font-family: var(--serif); font-size: 20px; color: var(--text); border-top: 1px solid var(--rule); padding-top: 12px; margin-top: 6px; }
+.mini-row.total .v { color: var(--gold); }
+.trust-seals { display: flex; justify-content: space-around; margin-top: 16px; padding-top: 14px; border-top: 1px solid #1a1a2a; flex-wrap: wrap; gap: 8px; }
+.seal { font-size: 10px; color: var(--faint); display: flex; align-items: center; gap: 4px; }
+.seal span { color: var(--gold); }
+
+/* ── CONFIRM ── */
+.confirm-box { max-width: 560px; margin: 80px auto; padding: 0 40px; text-align: center; }
+.confirm-icon { font-size: 56px; margin-bottom: 20px; }
+.confirm-box h1 { font-family: var(--serif); font-size: 48px; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
+.confirm-box p { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 10px; }
+.order-num-box { display: inline-block; background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--r); padding: 11px 22px; font-size: 12px; color: var(--faint); letter-spacing: .1em; text-transform: uppercase; margin: 18px 0; }
+.dl-note { background: var(--bg2); border: 1px solid var(--rule); border-left: 3px solid var(--gold); border-radius: 0 var(--r) var(--r) 0; padding: 18px 20px; text-align: left; margin: 24px 0; font-size: 13px; color: var(--muted); line-height: 1.7; }
+.dl-note strong { color: var(--gold); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--rule);
+  background: var(--bg2);
+  padding: 36px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.f-brand { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--gold); }
+.f-copy { font-size: 11px; color: var(--faint); }
+.f-links { display: flex; gap: 20px; }
+.f-links a { font-size: 11px; color: var(--faint); text-decoration: none; transition: color .2s; cursor: pointer; }
+.f-links a:hover { color: var(--gold); }
+
+/* ── ANIM ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim { animation: fadeUp .7s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 760px) {
+  .nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 60px 24px; }
+  .wrap { padding: 56px 24px; }
+  .trust-bar { padding: 14px 20px; gap: 20px; }
+  .who-grid { grid-template-columns: 1fr; gap: 30px; }
+  .product-layout { grid-template-columns: 1fr; padding: 44px 24px; gap: 36px; }
+  .tabs-wrap { padding: 0 24px 56px; }
+  .cart-layout { grid-template-columns: 1fr; padding: 44px 24px; }
+  .cart-summary { position: static; }
+  .checkout-layout { grid-template-columns: 1fr; padding: 44px 24px; }
+  .order-mini { position: static; }
+  .f-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; align-items: center; text-align: center; padding: 28px 24px; }
+  .f-links { justify-content: center; }
+  .cta-section { padding: 64px 24px; }
+  .confirm-box { padding: 0 24px; }
+}
+</style>
+</head>
+<body>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 1 · LANDING
+════════════════════════════════════════════ -->
+<div id="page-landing" class="page active">
+
+  <div class="ann">
+    🔥 END OF Q1 SALE — Up to <span>85% OFF</span> · Ends soon
+  </div>
+
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('landing')">Crisis<span>Craft</span></div>
+    <div class="nav-links">
+      <a onclick="goTo('landing','#l-inside')">What's Inside</a>
+      <a onclick="goTo('landing','#l-reviews')">Reviews</a>
+      <a onclick="goTo('landing','#l-faq')">FAQ</a>
+    </div>
+    <div class="nav-cart" onclick="showPage('cart')">
+      🛒 Cart <div class="cart-dot" id="cb1">1</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Survival Starts Here</div>
+      <h1 class="hero-h1">THE CRISIS<br><span class="gold">CRAFT</span></h1>
+      <div class="hero-h2">Field Manual</div>
+      <p class="hero-desc">The no-nonsense survival guide written for people living on the streets — real tactics, real resources, real hope. No fluff. No doomsday. No guesswork.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="showPage('product')">Get The Manual — $17</button>
+        <button class="btn-outline" onclick="goTo('landing','#l-inside')">See What's Inside</button>
+      </div>
+      <div class="hero-price-note">
+        Regular: <span class="strike">$99</span> &nbsp;·&nbsp; Today: <span class="price">$17</span> &nbsp;·&nbsp; Instant Digital Download
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="trust-icon">⚡</span> Instant Download</div>
+    <div class="trust-item"><span class="trust-icon">🛡</span> 21-Day Guarantee</div>
+    <div class="trust-item"><span class="trust-icon">📖</span> 80+ Pages</div>
+    <div class="trust-item"><span class="trust-icon">🗺</span> Real-World Tactics</div>
+    <div class="trust-item"><span class="trust-icon">🔒</span> Secure Checkout</div>
+  </div>
+
+  <!-- WHAT'S INSIDE -->
+  <div id="l-inside">
+    <div class="wrap">
+      <div class="sec-label">What You Get</div>
+      <h2 class="sec-h">Everything You Need<br>to <span class="gold">Survive &amp; Rebuild</span></h2>
+      <p class="sec-desc">No fluff. No theory. Just practical, field-tested knowledge organized so you can act fast under pressure.</p>
+      <div class="inside-grid">
+        <div class="inside-card">
+          <div class="inside-num">01</div>
+          <h3>Shelter &amp; Safety</h3>
+          <p>How to find safe places to sleep, avoid dangerous situations, and protect yourself and your belongings at night.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-num">02</div>
+          <h3>Food &amp; Water</h3>
+          <p>Where to eat for free, how to stretch limited resources, food bank directories, and staying nourished on zero budget.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-num">03</div>
+          <h3>Medical &amp; Health</h3>
+          <p>Free clinics, emergency care access, managing chronic conditions without insurance, and mental health support resources.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-num">04</div>
+          <h3>Documents &amp; ID</h3>
+          <p>Step-by-step guides to recovering lost IDs, birth certificates, and vital documents — the key to unlocking benefits and housing.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-num">05</div>
+          <h3>Benefits &amp; Aid</h3>
+          <p>How to apply for emergency assistance, housing vouchers, SNAP, SSI, and every program you're entitled to.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-num">06</div>
+          <h3>The Path Back</h3>
+          <p>Practical steps to get back on your feet: job searching, transitional housing, rebuilding credit, and staying motivated.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHO IT'S FOR -->
+  <div class="wrap-alt">
+    <div class="wrap" style="padding-top:72px;padding-bottom:72px;">
+      <div class="sec-label">Written For</div>
+      <h2 class="sec-h">This Manual Is For<br><span class="gold">People In Crisis</span></h2>
+      <div class="who-grid">
+        <ul class="who-list">
+          <li>You're currently unhoused or sleeping rough</li>
+          <li>You just lost your housing and don't know where to start</li>
+          <li>You want to help a friend or family member who is homeless</li>
+          <li>You work with homeless populations and need a resource guide</li>
+          <li>You're living in your car, a shelter, or couch surfing</li>
+          <li>You need real answers, not motivational speeches</li>
+        </ul>
+        <div class="who-callout">
+          <p>"This isn't a book about how good life could be. It's a manual for the hard days — the days when you don't know what your next move is. We wrote it to be used, not shelved."</p>
+          <div class="sig">— The Crisis Craft Team</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div id="l-reviews">
+    <div class="wrap">
+      <div class="sec-label">Real Stories</div>
+      <h2 class="sec-h">People Who Used<br><span class="gold">This Manual</span></h2>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p>"I had no idea I was eligible for half the programs listed in chapter 5. Within two weeks I had emergency housing assistance lined up. This thing is a lifeline."</p>
+          <div class="testi-author">Marcus T. — Detroit, MI</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p>"I bought this for my brother who was living under a bridge. He used the documents section to get his ID back and eventually got into transitional housing."</p>
+          <div class="testi-author">Renee J. — Social Worker</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p>"No one talks to you like a human when you're on the streets. This book does. The shelter safety section alone kept me out of dangerous spots for months."</p>
+          <div class="testi-author">Devon R. — Portland, OR</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="l-faq" class="wrap-alt">
+    <div class="wrap" style="padding-top:72px;padding-bottom:72px;">
+      <div class="sec-label">Questions</div>
+      <h2 class="sec-h">Got Questions?<br><span class="gold">We've Got Answers</span></h2>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">Is this a physical book or digital? <span class="faq-icon">+</span></button><div class="faq-a">It's a digital PDF you can download instantly after purchase. You can read it on any phone, tablet, or computer — no app required.</div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">What if I don't have a phone or computer to read it? <span class="faq-icon">+</span></button><div class="faq-a">Most public libraries offer free computer access. Once downloaded, you can print it at any library or UPS store. We also list free printing resources inside the manual.</div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">Is this just for the US? <span class="faq-icon">+</span></button><div class="faq-a">Core survival tactics apply anywhere. Resource directories are US-focused, but we include guidance on finding equivalent programs in other countries.</div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">What if I don't find it helpful? <span class="faq-icon">+</span></button><div class="faq-a">We offer a 21-day no-questions-asked refund. Email us and we'll refund you in full — no hoops to jump through.</div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">Is this a one-time purchase? <span class="faq-icon">+</span></button><div class="faq-a">Yes — $17 one-time. No subscription. All future updates included free.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="cta-section">
+    <div class="cta-inner">
+      <div class="sec-label" style="text-align:center;margin-bottom:12px;">Don't Wait</div>
+      <h2 class="sec-h" style="text-align:center;">Get The Manual<br><span class="gold">Today</span></h2>
+      <p style="font-size:15px;color:var(--muted);margin-bottom:8px;font-weight:300;">80+ pages of real survival knowledge. Instant download.</p>
+      <div class="price-display">
+        <div class="price-was">$99</div>
+        <div>
+          <div class="price-now">$17</div>
+          <div class="price-tag">83% off</div>
+        </div>
+      </div>
+      <button class="btn-primary" style="font-size:14px;padding:18px 48px;" onclick="showPage('product')">Get Instant Access — $17</button>
+      <div class="guarantee-note">🛡 21-Day Money Back Guarantee &nbsp;·&nbsp; 🔒 Secure Checkout &nbsp;·&nbsp; ⚡ Instant Download</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-brand">CrisisCraft</div>
+    <div class="f-copy">© 2026 Crisis Craft. All rights reserved.</div>
+    <div class="f-links">
+      <a href="#">Refund Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 2 · PRODUCT
+════════════════════════════════════════════ -->
+<div id="page-product" class="page">
+
+  <div class="ann">🔥 <span>85% OFF TODAY ONLY</span> — Price returns to $99 at midnight</div>
+
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('landing')">Crisis<span>Craft</span></div>
+    <div class="nav-links">
+      <a onclick="showPage('landing')">← Home</a>
+      <a onclick="goTo('product','#p-reviews')">Reviews</a>
+      <a onclick="goTo('product','#p-faq')">FAQ</a>
+    </div>
+    <div class="nav-cart" onclick="showPage('cart')">
+      🛒 Cart <div class="cart-dot" id="cb2">1</div>
+    </div>
+  </nav>
+
+  <div class="product-layout">
+    <!-- Book visual -->
+    <div class="book-box">
+      <div class="book-mockup">
+        <div class="book-vol">Crisis Craft — Vol. 1</div>
+        <div class="book-icon-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        </div>
+        <div class="book-t">The Crisis Craft Field Manual</div>
+        <div class="book-d">Stay warm. Stay clean. Stay fed. Stay in the game. The complete survival system.</div>
+        <div class="book-ln"></div>
+        <div class="book-br">crisiscraft.com · 2026</div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-info">
+      <div class="breadcrumb" onclick="showPage('landing')">Home &rsaquo; <span>The Manual</span></div>
+      <h1>The Crisis Craft<br><span class="gold">Field Manual</span></h1>
+      <div class="prod-rating">
+        <span class="prod-stars">★★★★★</span>
+        4.9 / 5.0 &nbsp;·&nbsp; 2,544 Reviews
+      </div>
+      <div class="price-block">
+        <div class="orig">Regular Price: $99.00</div>
+        <div class="sale">$17.00</div>
+        <div class="save-tag">You Save 83%</div>
+      </div>
+      <ul class="prod-bullets">
+        <li>80+ pages of real, actionable survival knowledge</li>
+        <li>Shelter, food, water, and safety tactics</li>
+        <li>Step-by-step guide to recovering lost documents &amp; IDs</li>
+        <li>Complete benefits &amp; aid application guide</li>
+        <li>The path back — jobs, housing, rebuilding your life</li>
+        <li>Updated resource directories for 2026</li>
+        <li>Instant PDF download — works on any device</li>
+      </ul>
+      <button class="atc-btn" onclick="showPage('cart')">Add to Cart — $17.00</button>
+      <button class="btn-outline" style="width:100%;text-align:center;display:block;margin-bottom:4px;" onclick="showPage('cart')">Buy Now</button>
+      <div class="guar-strip"><span>🛡</span> 21-Day Money Back Guarantee — No Questions Asked</div>
+      <div class="guar-strip" style="margin-top:7px;"><span>⚡</span> Instant digital delivery to your email</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-wrap">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="tab(this,'t-desc')">Description</button>
+      <button class="tab-btn" onclick="tab(this,'t-reviews')">Reviews (2,544)</button>
+      <button class="tab-btn" onclick="tab(this,'t-faq')">FAQ</button>
+    </div>
+
+    <div id="t-desc" class="tab-pane active">
+      <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:680px;margin-bottom:16px;font-weight:300;">The Crisis Craft Field Manual is the survival guide nobody gave you. Written for people living through homelessness — not about them — it covers every critical area of daily survival with zero fluff and maximum usefulness.</p>
+      <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:680px;font-weight:300;">Whether you need to know how to find safe shelter tonight, which programs you qualify for, or how to start rebuilding your life from nothing — this manual has you covered. Every chapter is built around real situations faced by real people.</p>
+    </div>
+
+    <div id="t-reviews" class="tab-pane">
+      <div id="p-reviews" class="testi-grid" style="margin-top:0;">
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p>"Got my birth certificate back in 10 days using chapter 4. This thing changed everything."</p><div class="testi-author">James K.</div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p>"I work at a shelter and hand this out to new arrivals. Been doing this 12 years and still learned things."</p><div class="testi-author">Sandra M. — Shelter Director</div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p>"Downloaded this on a library computer when I had nothing. I'm in transitional housing now."</p><div class="testi-author">Anonymous</div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p>"The hygiene chapter is the one nobody else covers. Worth more than the $17 alone."</p><div class="testi-author">T. Williams</div></div>
+      </div>
+    </div>
+
+    <div id="t-faq" class="tab-pane">
+      <div id="p-faq" class="faq-list" style="margin-top:0;">
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">How do I access it after purchase? <span class="faq-icon">+</span></button><div class="faq-a">You'll receive a download link by email immediately after payment. Save or print it — yours to keep forever.</div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">Is this a one-time payment? <span class="faq-icon">+</span></button><div class="faq-a">Yes — $17 one time. No subscription, no upsells. All future updates included free.</div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">What if I don't have a bank card? <span class="faq-icon">+</span></button><div class="faq-a">We accept PayPal, which can be funded via cash through PayPal My Cash cards available at most convenience stores.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-brand">CrisisCraft</div>
+    <div class="f-copy">© 2026 Crisis Craft. All rights reserved.</div>
+    <div class="f-links"><a href="#">Refund Policy</a><a href="#">Terms</a><a href="#">Privacy</a></div>
+  </footer>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 3 · CART
+════════════════════════════════════════════ -->
+<div id="page-cart" class="page">
+
+  <div class="ann">🔒 Secure Checkout &nbsp;·&nbsp; <span>83% Discount Applied</span></div>
+
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('landing')">Crisis<span>Craft</span></div>
+    <div class="nav-links"><a onclick="showPage('landing')">← Continue Shopping</a></div>
+    <div class="nav-cart" onclick="showPage('cart')">
+      🛒 Cart <div class="cart-dot" id="cb3">1</div>
+    </div>
+  </nav>
+
+  <div class="cart-layout">
+    <!-- Left -->
+    <div>
+      <h1 class="cart-h">Your Cart</h1>
+      <div class="cart-item">
+        <div class="cart-img">CRISIS<br>CRAFT</div>
+        <div class="cart-info" style="flex:1;">
+          <h3>The Crisis Craft Field Manual</h3>
+          <div class="tag">Digital PDF · Instant Download</div>
+          <div class="price">$17.00</div>
+          <div class="was">Was $99.00</div>
+          <div class="cart-remove">Remove</div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:16px 18px;margin-top:6px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">🛡 You're Protected</div>
+        <div style="font-size:12px;color:#6a6a8a;line-height:1.65;">21-Day Money Back Guarantee. If you don't find real value, email us for a full refund — no questions asked.</div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="cart-summary">
+      <h2>Order Summary</h2>
+      <div class="sum-row"><span>Subtotal</span><span>$99.00</span></div>
+      <div class="sum-row disc"><span>Discount (83% off)</span><span>−$82.00</span></div>
+      <div class="sum-row"><span>Delivery</span><span style="color:var(--gold);">FREE (Digital)</span></div>
+
+      <div class="coupon-row">
+        <input type="text" placeholder="Coupon code" id="coupon-in" />
+        <button onclick="applyCoupon()">Apply</button>
+      </div>
+      <div id="coupon-msg" style="font-size:11px;color:var(--gold);margin-top:-6px;margin-bottom:10px;display:none;"></div>
+
+      <div class="sum-row total">
+        <span>Total</span>
+        <span class="val" id="cart-total">$17.00</span>
+      </div>
+
+      <button class="checkout-btn" onclick="showPage('checkout')">Proceed to Checkout →</button>
+      <p style="text-align:center;font-size:11px;color:var(--faint);margin-top:10px;letter-spacing:.04em;">🔒 SSL Encrypted · Safe &amp; Secure</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-brand">CrisisCraft</div>
+    <div class="f-copy">© 2026 Crisis Craft. All rights reserved.</div>
+    <div class="f-links"><a href="#">Refund Policy</a><a href="#">Terms</a><a href="#">Privacy</a></div>
+  </footer>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 4 · CHECKOUT
+════════════════════════════════════════════ -->
+<div id="page-checkout" class="page">
+
+  <div class="ann">🔒 <span>Secure Checkout</span> — 256-bit SSL Encrypted</div>
+
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('landing')">Crisis<span>Craft</span></div>
+    <div class="nav-links"><a onclick="showPage('cart')">← Back to Cart</a></div>
+    <div style="font-size:12px;color:var(--faint);">🔒 Secure</div>
+  </nav>
+
+  <div id="co-form">
+    <div class="checkout-layout">
+      <!-- Form -->
+      <div>
+        <h1 class="checkout-h">Checkout</h1>
+        <p class="checkout-sub">Complete your order · Takes less than 2 minutes</p>
+
+        <div class="steps">
+          <div class="step active">1 · Contact</div>
+          <div class="step">2 · Payment</div>
+          <div class="step">3 · Confirm</div>
+        </div>
+
+        <div class="f-sec-label" style="margin-top:0;">Contact Information</div>
+        <div class="f-group">
+          <label class="f-label">Email Address</label>
+          <input class="f-input" type="email" placeholder="your@email.com" id="co-email" />
+        </div>
+
+        <div class="f-sec-label">Payment</div>
+        <div class="pay-methods" id="pay-methods">
+          <div class="pay-opt active" onclick="payOpt(this,'pf-card')">💳 Card</div>
+          <div class="pay-opt" onclick="payOpt(this,'pf-paypal')">🅿 PayPal</div>
+          <div class="pay-opt" onclick="payOpt(this,'pf-apple')">🍎 Apple Pay</div>
+        </div>
+
+        <div id="pf-card" class="pay-fields active">
+          <div class="f-group" style="position:relative;">
+            <label class="f-label">Card Number</label>
+            <input class="f-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)" />
+            <div style="position:absolute;right:12px;top:calc(50% + 10px);transform:translateY(-50%);font-size:10px;color:var(--faint);">VISA · MC · AMEX</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label class="f-label">Expiry</label><input class="f-input" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)" /></div>
+            <div class="f-group"><label class="f-label">CVV</label><input class="f-input" type="text" placeholder="123" maxlength="4" /></div>
+          </div>
+          <div class="f-group"><label class="f-label">Name on Card</label><input class="f-input" type="text" placeholder="Full name as on card" /></div>
+        </div>
+        <div id="pf-paypal" class="pay-fields">
+          <div style="background:var(--bg2);border:1px solid var(--rule);border-radius:var(--r);padding:22px;text-align:center;font-size:13px;color:var(--muted);">You'll be redirected to PayPal after clicking Complete Purchase.</div>
+        </div>
+        <div id="pf-apple" class="pay-fields">
+          <div style="background:var(--bg2);border:1px solid var(--rule);border-radius:var(--r);padding:22px;text-align:center;font-size:13px;color:var(--muted);">Apple Pay will be triggered after clicking Complete Purchase.</div>
+        </div>
+
+        <div class="f-sec-label">Billing Address</div>
+        <div class="f-group">
+          <label class="f-label">Country</label>
+          <select class="f-select"><option>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option><option>Other</option></select>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">ZIP / Postal Code</label><input class="f-input" type="text" placeholder="90210" /></div>
+          <div class="f-group"><label class="f-label">State / Province</label><input class="f-input" type="text" placeholder="CA" /></div>
+        </div>
+
+        <p style="font-size:11px;color:var(--faint);line-height:1.65;margin-bottom:20px;margin-top:8px;">By completing your purchase you agree to our <a href="#" style="color:var(--gold);">Terms of Service</a> and <a href="#" style="color:var(--gold);">Refund Policy</a>.</p>
+
+        <button class="atc-btn" onclick="completePurchase()">Complete Purchase — $17.00</button>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;font-size:11px;color:var(--faint);margin-top:12px;flex-wrap:wrap;">
+          <span><span style="color:var(--gold);">🛡</span> 21-Day Guarantee</span>
+          <span><span style="color:var(--gold);">🔒</span> 256-bit SSL</span>
+          <span><span style="color:var(--gold);">⚡</span> Instant Delivery</span>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="order-mini">
+        <h3>Your Order</h3>
+        <div class="mini-item">
+          <div class="mini-img">CC<br>FM</div>
+          <div class="mini-name">The Crisis Craft Field Manual<br><span style="color:var(--faint);font-size:10px;">Digital PDF</span></div>
+          <div class="mini-price">$17</div>
+        </div>
+        <div class="mini-row"><span>Subtotal</span><span>$99.00</span></div>
+        <div class="mini-row disc"><span>Discount</span><span>−$82.00</span></div>
+        <div class="mini-row"><span>Delivery</span><span style="color:var(--gold);">FREE</span></div>
+        <div class="mini-row total"><span>Total</span><span class="v">$17.00</span></div>
+        <div class="trust-seals">
+          <div class="seal"><span>🔒</span> SSL Secure</div>
+          <div class="seal"><span>🛡</span> Guaranteed</div>
+          <div class="seal"><span>⚡</span> Instant</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation -->
+  <div id="co-confirm" style="display:none;">
+    <div class="confirm-box">
+      <div class="confirm-icon">✅</div>
+      <h1>Order Confirmed!</h1>
+      <p>Thank you for your purchase. Your Crisis Craft Field Manual is ready for download.</p>
+      <div class="order-num-box">Order #CCM-<span id="ord-num"></span></div>
+      <div class="dl-note">
+        <strong>📧 Check Your Email</strong><br><br>
+        We've sent your download link to <strong id="ord-email" style="color:var(--text);"></strong>. The link is valid for 30 days. Check your spam folder if you don't see it within 5 minutes.
+      </div>
+      <p style="font-size:12px;color:var(--faint);">Need help? <span style="color:var(--gold);">support@crisiscraft.com</span></p>
+      <button class="btn-primary" style="margin-top:28px;" onclick="showPage('landing')">Back to Home</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-brand">CrisisCraft</div>
+    <div class="f-copy">© 2026 Crisis Craft. All rights reserved.</div>
+    <div class="f-links"><a href="#">Refund Policy</a><a href="#">Terms</a><a href="#">Privacy</a></div>
+  </footer>
+</div>
+
+
+<script>
+/* ── ROUTING ── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+function goTo(page, hash) {
+  showPage(page);
+  setTimeout(() => {
+    const el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+/* ── FAQ ── */
+function faq(btn) {
+  const ans = btn.nextElementSibling;
+  const list = btn.closest('.faq-list');
+  if (list) {
+    list.querySelectorAll('.faq-q.open').forEach(q => { if (q !== btn) { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); } });
+  }
+  btn.classList.toggle('open');
+  ans.classList.toggle('open');
+}
+
+/* ── PRODUCT TABS ── */
+function tab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+/* ── PAYMENT METHOD ── */
+function payOpt(el, id) {
+  document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('active'));
+  document.querySelectorAll('.pay-fields').forEach(f => f.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+/* ── COUPON ── */
+function applyCoupon() {
+  const code = document.getElementById('coupon-in').value.trim().toUpperCase();
+  const msg = document.getElementById('coupon-msg');
+  if (code === 'SURVIVE10') {
+    msg.textContent = '✓ Code applied — new total: $15.30';
+    msg.style.color = 'var(--gold)';
+    msg.style.display = 'block';
+    document.getElementById('cart-total').textContent = '$15.30';
+  } else if (!code) {
+    msg.style.display = 'none';
+  } else {
+    msg.textContent = '✗ Invalid coupon code';
+    msg.style.color = '#e05a4a';
+    msg.style.display = 'block';
+  }
+}
+
+/* ── CARD FORMAT ── */
+function fmtCard(el) {
+  let v = el.value.replace(/\D/g, '').slice(0, 16);
+  el.value = v.replace(/(.{4})/g, '$1 ').trim();
+}
+function fmtExp(el) {
+  let v = el.value.replace(/\D/g, '').slice(0, 4);
+  if (v.length >= 2) v = v.slice(0,2) + ' / ' + v.slice(2);
+  el.value = v;
+}
+
+/* ── COMPLETE PURCHASE ── */
+function completePurchase() {
+  const emailEl = document.getElementById('co-email');
+  if (!emailEl.value.trim() || !emailEl.value.includes('@')) {
+    emailEl.style.borderColor = '#e05a4a';
+    emailEl.focus();
+    return;
+  }
+  document.getElementById('ord-num').textContent = Math.floor(100000 + Math.random() * 900000);
+  document.getElementById('ord-email').textContent = emailEl.value.trim();
+  document.getElementById('co-form').style.display = 'none';
+  document.getElementById('co-confirm').style.display = 'block';
+  window.scrollTo({ top: 0 });
+}
+</script>
+</body>
+</html>
