@@ -1264,26 +1264,39 @@ footer {
 
   <div id="co-form">
     <div class="checkout-layout">
-      <!-- Form -->
+      <!-- Order Preview -->
       <div>
-        <h1 class="checkout-h">Checkout</h1>
-        <p class="checkout-sub">Complete your order · Takes less than 2 minutes</p>
+        <h1 class="checkout-h">Review Your Order</h1>
+        <p class="checkout-sub">One step away · Secure checkout powered by Stripe</p>
 
         <div class="steps">
-          <div class="step active">1 · Contact</div>
+          <div class="step active">1 · Review</div>
           <div class="step">2 · Payment</div>
-          <div class="step">3 · Confirm</div>
+          <div class="step">3 · Download</div>
         </div>
 
-        <div class="f-sec-label" style="margin-top:0;">Contact Information</div>
+        <!-- What's included -->
+        <div class="f-sec-label" style="margin-top:0;">What You're Getting</div>
+        <div style="background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--r);padding:18px 20px;margin-bottom:20px;">
+          <div style="font-weight:600;color:var(--text);margin-bottom:6px;">The Crisis Craft Field Manual</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+            ✦ Instant digital PDF — download immediately after payment<br>
+            ✦ All future updates included free<br>
+            ✦ 21-day no-questions-asked refund guarantee
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="f-sec-label">Where Should We Send Your Download Link?</div>
         <div class="f-group">
           <label class="f-label">Email Address</label>
           <input class="f-input" type="email" placeholder="your@email.com" id="co-email" />
+          <div style="font-size:11px;color:var(--faint);margin-top:6px;">Your PDF download link will be emailed here instantly after payment.</div>
         </div>
 
-        <div style="background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--r);padding:18px 20px;margin-bottom:20px;font-size:13px;color:var(--muted);line-height:1.6;">
-          <span style="color:var(--gold);font-weight:600;">🔒 Secure payment on the next step</span><br>
-          After clicking below you'll be taken to Stripe's encrypted checkout page to enter your card details. Visa, Mastercard, Amex accepted.
+        <!-- Stripe handoff notice -->
+        <div style="background:var(--gold-dim);border:1px solid rgba(200,168,75,0.25);border-radius:var(--r);padding:14px 18px;margin-bottom:20px;font-size:12px;color:var(--muted);line-height:1.6;">
+          🔒 <strong style="color:var(--gold);">You'll enter your card details on Stripe's secure page</strong> — your payment info never touches this site.
         </div>
 
         <p style="font-size:11px;color:var(--faint);line-height:1.65;margin-bottom:20px;">By completing your purchase you agree to our <a href="#" style="color:var(--gold);">Terms of Service</a> and <a href="#" style="color:var(--gold);">Refund Policy</a>.</p>
