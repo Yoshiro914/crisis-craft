@@ -37,6 +37,7 @@ exports.handler = async (event) => {
     },
     body: JSON.stringify({
       from: 'Crisis Craft <orders@crisiscraft.store>',
+      reply_to: 'support@crisiscraft.com',
       to: email,
       subject: 'Your Crisis Craft Field Manual — Download Inside',
       html: `
