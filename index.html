@@ -1281,45 +1281,14 @@ footer {
           <input class="f-input" type="email" placeholder="your@email.com" id="co-email" />
         </div>
 
-        <div class="f-sec-label">Payment</div>
-        <div class="pay-methods" id="pay-methods">
-          <div class="pay-opt active" onclick="payOpt(this,'pf-card')">💳 Card</div>
-          <div class="pay-opt" onclick="payOpt(this,'pf-paypal')">🅿 PayPal</div>
-          <div class="pay-opt" onclick="payOpt(this,'pf-apple')">🍎 Apple Pay</div>
+        <div style="background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--r);padding:18px 20px;margin-bottom:20px;font-size:13px;color:var(--muted);line-height:1.6;">
+          <span style="color:var(--gold);font-weight:600;">🔒 Secure payment on the next step</span><br>
+          After clicking below you'll be taken to Stripe's encrypted checkout page to enter your card details. Visa, Mastercard, Amex accepted.
         </div>
 
-        <div id="pf-card" class="pay-fields active">
-          <div class="f-group" style="position:relative;">
-            <label class="f-label">Card Number</label>
-            <input class="f-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)" />
-            <div style="position:absolute;right:12px;top:calc(50% + 10px);transform:translateY(-50%);font-size:10px;color:var(--faint);">VISA · MC · AMEX</div>
-          </div>
-          <div class="f-row">
-            <div class="f-group"><label class="f-label">Expiry</label><input class="f-input" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)" /></div>
-            <div class="f-group"><label class="f-label">CVV</label><input class="f-input" type="text" placeholder="123" maxlength="4" /></div>
-          </div>
-          <div class="f-group"><label class="f-label">Name on Card</label><input class="f-input" type="text" placeholder="Full name as on card" /></div>
-        </div>
-        <div id="pf-paypal" class="pay-fields">
-          <div style="background:var(--bg2);border:1px solid var(--rule);border-radius:var(--r);padding:22px;text-align:center;font-size:13px;color:var(--muted);">You'll be redirected to PayPal after clicking Complete Purchase.</div>
-        </div>
-        <div id="pf-apple" class="pay-fields">
-          <div style="background:var(--bg2);border:1px solid var(--rule);border-radius:var(--r);padding:22px;text-align:center;font-size:13px;color:var(--muted);">Apple Pay will be triggered after clicking Complete Purchase.</div>
-        </div>
+        <p style="font-size:11px;color:var(--faint);line-height:1.65;margin-bottom:20px;">By completing your purchase you agree to our <a href="#" style="color:var(--gold);">Terms of Service</a> and <a href="#" style="color:var(--gold);">Refund Policy</a>.</p>
 
-        <div class="f-sec-label">Billing Address</div>
-        <div class="f-group">
-          <label class="f-label">Country</label>
-          <select class="f-select"><option>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option><option>Other</option></select>
-        </div>
-        <div class="f-row">
-          <div class="f-group"><label class="f-label">ZIP / Postal Code</label><input class="f-input" type="text" placeholder="90210" /></div>
-          <div class="f-group"><label class="f-label">State / Province</label><input class="f-input" type="text" placeholder="CA" /></div>
-        </div>
-
-        <p style="font-size:11px;color:var(--faint);line-height:1.65;margin-bottom:20px;margin-top:8px;">By completing your purchase you agree to our <a href="#" style="color:var(--gold);">Terms of Service</a> and <a href="#" style="color:var(--gold);">Refund Policy</a>.</p>
-
-        <button class="atc-btn" onclick="completePurchase()">Complete Purchase — $17.00</button>
+        <button class="atc-btn" onclick="completePurchase()">Continue to Secure Payment →</button>
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;font-size:11px;color:var(--faint);margin-top:12px;flex-wrap:wrap;">
           <span><span style="color:var(--gold);">🛡</span> 21-Day Guarantee</span>
           <span><span style="color:var(--gold);">🔒</span> 256-bit SSL</span>
@@ -1444,18 +1413,31 @@ function fmtExp(el) {
 }
 
 /* ── COMPLETE PURCHASE ── */
-function completePurchase() {
+async function completePurchase() {
   const emailEl = document.getElementById('co-email');
   if (!emailEl.value.trim() || !emailEl.value.includes('@')) {
     emailEl.style.borderColor = '#e05a4a';
     emailEl.focus();
     return;
   }
-  document.getElementById('ord-num').textContent = Math.floor(100000 + Math.random() * 900000);
-  document.getElementById('ord-email').textContent = emailEl.value.trim();
-  document.getElementById('co-form').style.display = 'none';
-  document.getElementById('co-confirm').style.display = 'block';
-  window.scrollTo({ top: 0 });
+  const btn = document.querySelector('button.atc-btn[onclick="completePurchase()"]');
+  if (btn) { btn.textContent = 'Redirecting to secure checkout…'; btn.disabled = true; }
+  try {
+    const res = await fetch('/.netlify/functions/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: emailEl.value.trim() }),
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'Unknown error');
+    }
+  } catch (err) {
+    if (btn) { btn.textContent = 'Complete Purchase — $17.00'; btn.disabled = false; }
+    alert('Something went wrong. Please try again.');
+  }
 }
 </script>
 </body>
