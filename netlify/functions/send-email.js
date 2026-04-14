@@ -36,7 +36,7 @@ exports.handler = async (event) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Crisis Craft <onboarding@resend.dev>',
+      from: 'Crisis Craft <orders@crisiscraft.store>',
       to: email,
       subject: 'Your Crisis Craft Field Manual — Download Inside',
       html: `
